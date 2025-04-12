@@ -24,9 +24,21 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/signup")
-    public Users insert(@RequestBody Users user){
-        return userService.saveUser(user);
+    public ResponseEntity<String> signUp(@RequestBody Users user) {
+        try {
+            Users savedUser = userService.saveUser(user);
+
+            if (savedUser != null) {
+                return ResponseEntity.ok("User signed up successfully with email: " + savedUser.getEmail());  // Returning a success message
+            } else {
+                return ResponseEntity.status(400).body("Error saving user");
+            }
+        } catch (Exception e) {
+            
+        return ResponseEntity.status(500).body("Internal server error");
     }
+}
+
 
     @GetMapping("/allUser")
     public List<Users> getAllUsers(){
