@@ -31,10 +31,7 @@ public class UserService {
 
     public boolean verifyLogin(String email , String password){
         Users user = userRepo.findByEmail(email);
-        if( user != null && StringCompare(password, user.getPassword())){
-            return true;
-        }
-        return false;
+        return (user != null && StringCompare(password, user.getPassword()));
     }
 
     public ResponseEntity<String> deleteUserById(Integer user_id){
