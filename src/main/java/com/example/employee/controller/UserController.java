@@ -1,6 +1,7 @@
 package com.example.employee.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -38,13 +39,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loggin(@RequestBody Users user){
+    public ResponseEntity<String> login(@RequestBody Map<String, String> loginRequest) {
+        String email = loginRequest.get("user_email");
+        String password = loginRequest.get("user_password");
 
-        boolean verify = userService.verifyLogin(user.getEmail(), user.getPassword());
+        boolean verify = userService.verifyLogin(email, password);
 
         if(verify){
             return ResponseEntity.ok("Login successful");
         }
         return ResponseEntity.status(401).body("Invalid email or password");
     }
+
 }

@@ -25,14 +25,11 @@ public class UserService {
         return userRepo.findAll();
     }
 
-    public boolean StringCompare(String one , String two){
-        return one.equals(two);
-    }
-
-    public boolean verifyLogin(String email , String password){
+    public boolean verifyLogin(String email, String password) {
         Users user = userRepo.findByEmail(email);
-        return (user != null && StringCompare(password, user.getPassword()));
+        return (user != null && password.equals(user.getPassword()));
     }
+    
 
     public ResponseEntity<String> deleteUserById(Integer user_id){
         Optional<Users> user = userRepo.findById(user_id);
