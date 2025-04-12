@@ -25,8 +25,8 @@ public class Users {
 
     @Column(unique = true)
     private String email;
-
-    private Long phNo;
+    
+    private Long ph_no;
     private String password;
     private String address;
 

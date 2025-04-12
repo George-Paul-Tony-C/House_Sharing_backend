@@ -7,5 +7,5 @@ import com.example.employee.model.Users;
 
 @Repository
 public interface UserRepository extends JpaRepository<Users, Integer> {
-    
+    Users findByEmail(String email); 
 }
