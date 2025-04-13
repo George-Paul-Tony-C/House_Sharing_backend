@@ -2,6 +2,8 @@ package com.example.employee.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +17,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "users")
+@JsonIgnoreProperties({"houses", "reviews", "bookings"})
 public class Users {
 
     @Id
@@ -30,7 +33,7 @@ public class Users {
     private String password;
     private String address;
 
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Houses> houses;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
@@ -38,4 +41,9 @@ public class Users {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Bookings> bookings;
+
+    public Users orElse(Object object) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'orElse'");
+    }
 }

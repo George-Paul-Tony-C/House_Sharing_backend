@@ -1,5 +1,6 @@
 package com.example.employee.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.employee.model.Houses;
 import com.example.employee.model.Users;
 import com.example.employee.service.UserService;
 
@@ -23,21 +25,32 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    public UserController() {
+    }
+
     @PostMapping("/signup")
-    public ResponseEntity<String> signUp(@RequestBody Users user) {
+    public ResponseEntity<?> signUp(@RequestBody Users user) {
         try {
+            if (userService.existsByEmail(user.getEmail())) {
+                return ResponseEntity.status(400).body("Email is already in use.");
+            }
+
             Users savedUser = userService.saveUser(user);
 
             if (savedUser != null) {
-                return ResponseEntity.ok("User signed up successfully with email: " + savedUser.getEmail());  // Returning a success message
+                Map<String, Object> response = new HashMap<>();
+                response.put("message", "Sign up successful");
+                response.put("user", savedUser);  // Include the full user data
+
+                return ResponseEntity.ok(response);
             } else {
                 return ResponseEntity.status(400).body("Error saving user");
             }
         } catch (Exception e) {
-            
-        return ResponseEntity.status(500).body("Internal server error");
+            return ResponseEntity.status(500).body("Internal server error");
+        }
     }
-}
+
 
 
     @GetMapping("/allUser")
@@ -51,16 +64,38 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody Map<String, String> loginRequest) {
+    public ResponseEntity<?> login(@RequestBody Map<String, String> loginRequest) {
         String email = loginRequest.get("user_email");
         String password = loginRequest.get("user_password");
 
-        boolean verify = userService.verifyLogin(email, password);
+    
+        Users user = userService.verifyLoginAndGetUser(email, password);
 
-        if(verify){
-            return ResponseEntity.ok("Login successful");
+        if (user != null) {
+        
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Login successful");
+            response.put("user", user);  // Include the full user data
+        
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(401).body("Invalid email or password");
         }
-        return ResponseEntity.status(401).body("Invalid email or password");
+    }
+
+
+
+    @GetMapping("/{userId}/houses")
+    public ResponseEntity<?> getUserHouses(@PathVariable("userId") Integer userId){
+        List<Houses> houses = userService.getUserHouses(userId);
+        if(houses != null && !houses.isEmpty()){
+            Map<String, Object> response = new HashMap<>();
+            response.put("message" , "Data fetched");
+            response.put("houses" , houses);
+
+            return ResponseEntity.ok(response);
+        }
+        return ResponseEntity.status(404).body(null);
     }
 
 }

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.example.employee.model.Houses;
 import com.example.employee.model.Users;
 import com.example.employee.repository.UserRepository;
 
@@ -21,16 +22,26 @@ public class UserService {
         return userRepo.save(user);
     }
 
+    public boolean existsByEmail(String Email){
+        return existsByEmail(Email);
+    }
+
+    public Users getUserByEmail(String Email){
+        return userRepo.findByEmail(Email);
+    }
+
     public List<Users> getUsers(){
         return userRepo.findAll();
     }
 
-    public boolean verifyLogin(String email, String password) {
+    public Users verifyLoginAndGetUser(String email, String password) {
         Users user = userRepo.findByEmail(email);
-        return (user != null && password.equals(user.getPassword()));
+        if (user != null && user.getPassword().equals(password)) {
+            return user; 
+        }
+        return null; 
     }
     
-
     public ResponseEntity<String> deleteUserById(Integer user_id){
         Optional<Users> user = userRepo.findById(user_id);
         if(user.isPresent()){
@@ -38,6 +49,14 @@ public class UserService {
             return ResponseEntity.ok("User deleted successfully");
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+    }
+
+    public List<Houses> getUserHouses(Integer userId){
+        Users user = userRepo.findById(userId).orElse(null);
+        if(user != null){
+            return user.getHouses();
+        }
+        return null;
     }
 
     

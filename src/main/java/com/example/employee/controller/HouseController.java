@@ -18,6 +18,6 @@ public class HouseController {
 
     @PostMapping("/add")
     public Houses inser(@RequestBody Houses houses){
-        return houseService.savHouses(houses);
+        return houseService.saveHouse(houses);
     }
 }
