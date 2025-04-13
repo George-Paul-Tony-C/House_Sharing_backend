@@ -22,8 +22,12 @@ public class UserService {
         return userRepo.save(user);
     }
 
+    public Optional<Users> getCurrentUser(Integer userId){
+        return userRepo.findById(userId);
+    }
+
     public boolean existsByEmail(String Email){
-        return existsByEmail(Email);
+        return userRepo.existsByEmail(Email);
     }
 
     public Users getUserByEmail(String Email){

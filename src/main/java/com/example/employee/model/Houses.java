@@ -37,6 +37,10 @@ public class Houses {
 
     private String address;
 
+    private String description;
+
+    private String location;
+
     @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)
     private List<Rooms> rooms;
 }

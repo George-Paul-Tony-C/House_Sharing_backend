@@ -3,6 +3,7 @@ package com.example.employee.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +28,21 @@ public class UserController {
 
     public UserController() {
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getCurrentUser(@PathVariable("userId") Integer userId){
+        Optional<Users> user = userService.getCurrentUser(userId);
+        if(user.isPresent() ){  
+            Map<String , Object> response = new HashMap<>();
+            response.put("user", user.get()); 
+            response.put("message", "User Data fetched");
+
+            return ResponseEntity.ok(response); 
+        }
+
+        return ResponseEntity.status(404).body("User not found"); 
+    }
+
 
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody Users user) {

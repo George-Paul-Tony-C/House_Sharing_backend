@@ -21,7 +21,7 @@ import lombok.Data;
 @Entity
 @Data
 @Table(name = "rooms")
-@JsonIgnoreProperties({"house","reviews","bookings"})
+@JsonIgnoreProperties({"reviews","bookings"})
 public class Rooms {
 
     @Id
@@ -55,7 +55,7 @@ public class Rooms {
     public enum RoomType {
         AC,
         NON_AC,
-        FURNISHED,
-        NON_FURNISHED
+        DELUXE,
+        PREMIUM
     }
 }
