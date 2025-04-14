@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.employee.model.Houses;
+import com.example.employee.model.Reviews;
 import com.example.employee.model.Rooms;
 import com.example.employee.service.HouseService;
 
@@ -63,6 +64,11 @@ public class HouseController {
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); 
+    }
+
+    @GetMapping("/reviews/{houseId}")
+    public List<Reviews> getReviewsOfHouse(@PathVariable("houseId") Integer houseId){
+        return houseService.getReviewofAllRooms(houseId);
     }
 
 }

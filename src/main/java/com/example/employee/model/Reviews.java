@@ -30,3 +30,4 @@ public class Reviews {
 
     private Integer rating;
 }
+

@@ -1,5 +1,6 @@
 package com.example.employee.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.employee.model.Houses;
+import com.example.employee.model.Reviews;
 import com.example.employee.model.Rooms;
 import com.example.employee.repository.HouseRepository;
 
@@ -40,13 +42,30 @@ public class HouseService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("House not found");
     }
 
-    // Fix: Return empty list if no rooms found
     public List<Rooms> getRoomsForHouse(Integer houseId){
         Houses house = houseRepo.findById(houseId).orElse(null);
         if (house != null) {
-            // Return the list of rooms or an empty list if no rooms exist
             return house.getRooms() != null ? house.getRooms() : List.of();
         }
-        return List.of(); // Return an empty list if the house doesn't exist
+        return List.of(); 
+    }
+
+    public List<Reviews> getReviewofAllRooms(Integer houseId){
+        Houses house = houseRepo.findById(houseId).orElse(null);
+
+        if(house != null && house.getRooms() != null ){
+
+            List<Reviews> AllReview = new ArrayList<>();
+            
+            for(Rooms room : house.getRooms()){
+                if(room.getReviews() != null){
+                    AllReview.addAll(room.getReviews());
+                }
+            }
+
+            return AllReview;
+
+        }
+        return List.of();
     }
 }

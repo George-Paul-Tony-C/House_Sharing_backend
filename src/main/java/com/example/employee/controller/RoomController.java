@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.employee.model.Reviews;
 import com.example.employee.model.Rooms;
 import com.example.employee.service.RoomService;
 
@@ -25,8 +26,18 @@ public class RoomController {
         return roomService.saveRooms(room);
     }
 
+    @GetMapping("/{roomId}")
+    public Rooms getCurrentRooms(@PathVariable("roomId") Integer roomId){
+        return roomService.getCurrentRoom(roomId);
+    }
+
      @GetMapping("/house/{houseId}")
     public List<Rooms> getAllRoomsOfHouse(@PathVariable("houseId") Integer houseId){
         return roomService.getRoomsByHouseId(houseId);
     }
+
+    @GetMapping("/reviews/{roomId}")
+    public List<Reviews> getAllReviewsOfRooms(@PathVariable("roomId") Integer roomId){
+        return roomService.getAllReviewByRoomId(roomId);
+    } 
 }

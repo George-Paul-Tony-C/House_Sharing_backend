@@ -1,5 +1,7 @@
 package com.example.employee.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +16,9 @@ public class ReviewService {
 
     public Reviews savReviews(Reviews review){
         return reviewRepo.save(review);
+    }
+
+    public List<Reviews> getAllReview(){
+        return reviewRepo.findAll();
     }
 }
