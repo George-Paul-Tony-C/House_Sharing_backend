@@ -3,7 +3,10 @@ package com.example.employee.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import com.example.employee.model.Reviews;
 import com.example.employee.model.Rooms;
@@ -34,4 +37,35 @@ public class RoomService {
         }
         return List.of();
     }
+
+    // Update Room by ID
+    public Rooms updateRoom(Integer roomId, Rooms updatedRoom) {
+        return roomRepo.findById(roomId).map(room -> {
+            room.setRoomName(updatedRoom.getRoomName());
+            room.setRoomPrice(updatedRoom.getRoomPrice());
+            room.setAvailable(updatedRoom.getAvailable());
+            room.setRoomCapacity(updatedRoom.getRoomCapacity());
+            room.setRoomType(updatedRoom.getRoomType());
+            room.setImageUrl(updatedRoom.getImageUrl());
+    
+            // Optional: update house only if houseId is valid and changing
+            if (updatedRoom.getHouse() != null && updatedRoom.getHouse().getHouseId() != null) {
+                room.setHouse(updatedRoom.getHouse());
+            }
+    
+            return roomRepo.save(room);
+        }).orElse(null);
+    }
+
+    @DeleteMapping("/delete/{roomId}")
+    public ResponseEntity<String> deleteRoom(Integer roomId) {
+    if (roomRepo.existsById(roomId)) {
+        roomRepo.deleteById(roomId);
+        return ResponseEntity.ok("Room deleted successfully");
+    } else {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Room not found");
+    }
+}
+    
+
 }

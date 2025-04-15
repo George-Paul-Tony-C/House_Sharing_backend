@@ -43,7 +43,6 @@ public class UserController {
         return ResponseEntity.status(404).body("User not found"); 
     }
 
-
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody Users user) {
         try {
@@ -66,8 +65,6 @@ public class UserController {
             return ResponseEntity.status(500).body("Internal server error");
         }
     }
-
-
 
     @GetMapping("/allUser")
     public List<Users> getAllUsers(){
@@ -98,8 +95,6 @@ public class UserController {
             return ResponseEntity.status(401).body("Invalid email or password");
         }
     }
-
-
 
     @GetMapping("/{userId}/houses")
     public ResponseEntity<?> getUserHouses(@PathVariable("userId") Integer userId){
