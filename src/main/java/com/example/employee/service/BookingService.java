@@ -50,28 +50,6 @@ public class BookingService {
         return null;
     }
 
-    // @Scheduled(fixedRate = 1000)
-    // public void updateRoomAvailability() {
-    //     Date today = new Date(); // current date and time
-    //     List<Rooms> allRooms = roomRepo.findAll();
-
-    //     for (Rooms room : allRooms) {
-    //         List<Bookings> bookings = bookingRepo.findByRoomRoomId(room.getRoomId());
-
-    //         boolean isCurrentlyBooked = bookings.stream()
-    //             .anyMatch(booking -> {
-    //                 // Check if the current time is within the booking's start and end time
-    //                 return booking.getStatus() == StatusType.BOOKED && 
-    //                     (today.after(booking.getStartDate()) && today.before(booking.getEndDate()) || 
-    //                     today.equals(booking.getStartDate()) || today.equals(booking.getEndDate()));
-    //             });
-
-    //         // Update the availability based on the current bookings
-    //         room.setAvailable(!isCurrentlyBooked);
-    //         roomRepo.save(room);
-    //     }
-    // }
-
 
     public Bookings cancelBooking(Integer bookingId) {
         Bookings booking = bookingRepo.findById(bookingId).orElse(null);

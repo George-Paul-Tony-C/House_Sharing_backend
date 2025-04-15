@@ -32,6 +32,15 @@ public class HouseController {
         return houseService.saveHouse(houses);
     }
 
+    @PostMapping("/update/{houseId}")
+    public ResponseEntity<?> updateHouse(@PathVariable("houseId") Integer houseId, @RequestBody Houses updatedHouse) {
+        Houses result = houseService.updateHouse(houseId, updatedHouse);
+        if (result != null) {
+            return ResponseEntity.ok(result);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("House not found");
+        }
+    }
     @GetMapping("/allhouses")
     public List<Houses> getAllHouses(){
         return houseService.getAllHouses();
@@ -52,7 +61,6 @@ public class HouseController {
         }
     }
 
-
     @GetMapping("/rooms/{houseId}")
     public ResponseEntity<?> getRoomsForHouse(@PathVariable("houseId") Integer houseId) {
         List<Rooms> rooms = houseService.getRoomsForHouse(houseId);
@@ -65,6 +73,7 @@ public class HouseController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); 
     }
+
 
     @GetMapping("/reviews/{houseId}")
     public List<Reviews> getReviewsOfHouse(@PathVariable("houseId") Integer houseId){

@@ -51,6 +51,7 @@ public class HouseService {
     }
 
     public List<Reviews> getReviewofAllRooms(Integer houseId){
+
         Houses house = houseRepo.findById(houseId).orElse(null);
 
         if(house != null && house.getRooms() != null ){
@@ -67,5 +68,18 @@ public class HouseService {
 
         }
         return List.of();
+    }
+
+    public Houses updateHouse(Integer houseId, Houses updatedHouse) {
+        return houseRepo.findById(houseId).map(house -> {
+            house.setNoOfRooms(updatedHouse.getNoOfRooms());
+            house.setImageUrl(updatedHouse.getImageUrl());
+            house.setAmenities(updatedHouse.getAmenities());
+            house.setAddress(updatedHouse.getAddress());
+            house.setDescription(updatedHouse.getDescription());
+            house.setLocation(updatedHouse.getLocation());
+            // user and rooms are not updated here to avoid unwanted side effects
+            return houseRepo.save(house);
+        }).orElse(null);
     }
 }

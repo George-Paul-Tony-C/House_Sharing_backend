@@ -18,32 +18,32 @@ import com.example.employee.service.RoomService;
 @RestController
 @RequestMapping(path = "/api/room")
 public class RoomController {
-    
+
     @Autowired
     private RoomService roomService;
 
     @PostMapping("/add")
-    public Rooms insert(@RequestBody Rooms room){
+    public Rooms insert(@RequestBody Rooms room) {
         return roomService.saveRooms(room);
     }
 
     @GetMapping("/{roomId}")
-    public Rooms getCurrentRooms(@PathVariable("roomId") Integer roomId){
+    public Rooms getCurrentRooms(@PathVariable("roomId") Integer roomId) {
         return roomService.getCurrentRoom(roomId);
     }
 
-     @GetMapping("/house/{houseId}")
-    public List<Rooms> getAllRoomsOfHouse(@PathVariable("houseId") Integer houseId){
+    @GetMapping("/house/{houseId}")
+    public List<Rooms> getAllRoomsOfHouse(@PathVariable("houseId") Integer houseId) {
         return roomService.getRoomsByHouseId(houseId);
     }
 
     @GetMapping("/reviews/{roomId}")
-    public List<Reviews> getAllReviewsOfRooms(@PathVariable("roomId") Integer roomId){
+    public List<Reviews> getAllReviewsOfRooms(@PathVariable("roomId") Integer roomId) {
         return roomService.getAllReviewByRoomId(roomId);
     } 
 
     @GetMapping("/bookings/{roomId}")
-    public List<Bookings> getRoomBookings(@PathVariable("roomId") Integer roomId){
-        return roomService.getRoomBookings(roomId);
+    public List<Bookings> getAllBokingsOfRoom(@PathVariable("roomId") Integer roomId){
+        return roomService.getAllBokingsOfRoom(roomId);
     }
 }

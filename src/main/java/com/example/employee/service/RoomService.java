@@ -51,14 +51,12 @@ public class RoomService {
         return List.of();
     }
 
-    public List<Bookings> getRoomBookings(Integer roomId){
+    public List<Bookings> getAllBokingsOfRoom(Integer roomId){
         Rooms room = roomRepo.findById(roomId).orElse(null);
-
-        if(room != null){
+        if( room != null ){
             return room.getBookings();
         }
-
         return List.of();
     }
-    
+
 }
