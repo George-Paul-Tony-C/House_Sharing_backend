@@ -9,7 +9,6 @@ import com.example.employee.model.Bookings;
 import com.example.employee.model.Bookings.StatusType;
 import com.example.employee.model.Rooms;
 import com.example.employee.repository.BookingRepository;
-import com.example.employee.repository.RoomRepository;
 
 @Service
 public class BookingService {
@@ -19,9 +18,6 @@ public class BookingService {
 
     @Autowired
     private RoomService roomService;
-
-    @Autowired
-    private RoomRepository roomRepo;
 
     public Bookings saveBookings(Bookings booking) {
         Rooms room = roomService.getCurrentRoom(booking.getRoom().getRoomId());
