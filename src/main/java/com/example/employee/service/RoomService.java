@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.employee.model.Bookings;
 import com.example.employee.model.Reviews;
 import com.example.employee.model.Rooms;
 import com.example.employee.repository.RoomRepository;
@@ -18,6 +19,21 @@ public class RoomService {
     public Rooms saveRooms(Rooms room){
         return roomRepo.save(room);
     }
+
+    public Rooms updateRoom(Integer roomId, Rooms updatedRoomData) {
+        return roomRepo.findById(roomId).map(existingRoom -> {
+            // Update the fields you want to allow to be changed
+            existingRoom.setRoomName(updatedRoomData.getRoomName());
+            existingRoom.setRoomType(updatedRoomData.getRoomType());
+            existingRoom.setRoomPrice(updatedRoomData.getRoomPrice());
+            existingRoom.setAvailable(updatedRoomData.getAvailable());
+            existingRoom.setHouse(updatedRoomData.getHouse());
+            // Update other fields as necessary...
+    
+            return roomRepo.save(existingRoom);
+        }).orElse(null); // or throw an exception if room not found
+    }
+    
 
     public Rooms getCurrentRoom(Integer roomId){
         return roomRepo.findById(roomId).orElse(null);
@@ -34,4 +50,15 @@ public class RoomService {
         }
         return List.of();
     }
+
+    public List<Bookings> getRoomBookings(Integer roomId){
+        Rooms room = roomRepo.findById(roomId).orElse(null);
+
+        if(room != null){
+            return room.getBookings();
+        }
+
+        return List.of();
+    }
+    
 }

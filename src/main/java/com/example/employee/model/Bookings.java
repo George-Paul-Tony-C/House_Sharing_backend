@@ -44,7 +44,7 @@ public class Bookings {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "end_date")
     private Date endDate;
-
+    
     @Enumerated(EnumType.STRING)
     private StatusType status;
 

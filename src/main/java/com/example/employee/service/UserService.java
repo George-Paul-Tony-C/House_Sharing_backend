@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.example.employee.model.Bookings;
 import com.example.employee.model.Houses;
 import com.example.employee.model.Users;
 import com.example.employee.repository.UserRepository;
@@ -63,5 +64,13 @@ public class UserService {
         return null;
     }
 
-    
+    public List<Bookings> getBookings(Integer userId){
+        Users user = userRepo.findById(userId).orElse(null);
+
+        if(user != null){
+            return user.getBookings();
+        }
+        return null;
+    }
+
 }

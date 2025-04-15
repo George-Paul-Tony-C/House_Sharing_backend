@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.employee.model.Bookings;
 import com.example.employee.model.Houses;
 import com.example.employee.model.Users;
 import com.example.employee.service.UserService;
@@ -112,6 +113,11 @@ public class UserController {
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.status(404).body(null);
+    }
+
+    @GetMapping("/bookings/{userId}")
+    public List<Bookings> getBooking(@PathVariable("userId") Integer userId){
+        return userService.getBookings(userId);
     }
 
 }

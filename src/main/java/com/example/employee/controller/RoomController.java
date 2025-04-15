@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.employee.model.Bookings;
 import com.example.employee.model.Reviews;
 import com.example.employee.model.Rooms;
 import com.example.employee.service.RoomService;
@@ -40,4 +41,9 @@ public class RoomController {
     public List<Reviews> getAllReviewsOfRooms(@PathVariable("roomId") Integer roomId){
         return roomService.getAllReviewByRoomId(roomId);
     } 
+
+    @GetMapping("/bookings/{roomId}")
+    public List<Bookings> getRoomBookings(@PathVariable("roomId") Integer roomId){
+        return roomService.getRoomBookings(roomId);
+    }
 }
