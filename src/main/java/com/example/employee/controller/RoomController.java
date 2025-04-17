@@ -46,4 +46,9 @@ public class RoomController {
     public List<Bookings> getAllBokingsOfRoom(@PathVariable("roomId") Integer roomId){
         return roomService.getAllBokingsOfRoom(roomId);
     }
+
+    @GetMapping("/allRooms")
+    public List<Rooms> getAllRooms(){
+        return roomService.getAllRooms();
+    }
 }

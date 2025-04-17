@@ -59,4 +59,7 @@ public class RoomService {
         return List.of();
     }
 
+    public List<Rooms> getAllRooms(){
+        return roomRepo.findAll();
+    }
 }

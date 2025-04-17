@@ -64,5 +64,11 @@ public class BookingService {
     
         return null; 
     }
+
+    public List<Bookings> getBookingsOfRoomsByUser(Integer userId) {
+        return bookingRepo.findBookingsByRoomOwner(userId);
+    }
+
+    
     
 }

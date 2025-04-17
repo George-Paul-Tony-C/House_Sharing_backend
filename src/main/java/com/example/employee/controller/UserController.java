@@ -27,8 +27,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    public UserController() {
-    }
 
     @GetMapping("/{userId}")
     public ResponseEntity<?> getCurrentUser(@PathVariable("userId") Integer userId){
@@ -89,7 +87,7 @@ public class UserController {
         
             Map<String, Object> response = new HashMap<>();
             response.put("message", "Login successful");
-            response.put("user", user);  // Include the full user data
+            response.put("user", user);  
         
             return ResponseEntity.ok(response);
         } else {
